@@ -15,9 +15,9 @@
 
             - F_SETFL : 设置文件描述符文件状态flag
               必选项：O_RDONLY, O_WRONLY, O_RDWR 不可以被修改
-              可选性：O_APPEND, O)NONBLOCK
+              可选性：O_APPEND, O_NONBLOCK
                 O_APPEND 表示追加数据
-                NONBLOK 设置成非阻塞
+                O_NONBLOK 设置成非阻塞
         
         阻塞和非阻塞：描述的是函数调用的行为。
 */
