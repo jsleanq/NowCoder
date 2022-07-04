@@ -4,7 +4,7 @@
 
 ### 1.1开发环境
 
-####Linux操作系统 + GCC/G++（C语言、C++语言编译器）
+#### Linux操作系统 + GCC/G++（C语言、C++语言编译器）
 
 <table>
     <tr>
@@ -56,7 +56,7 @@
 | -fPIC | 编译器就输出位置无关目标码.适用于动态连接(dynamic linking) |
 | -shared | 将使用动态库为默认选项 |
 
-###1.2库文件
+### 1.2库文件
 
 计算机上某一类文件，类似代码仓库，无法单独运行，保密性强，方便分发
 
@@ -64,7 +64,7 @@
 
 动态库：程序运行时，系统加载进内存让程序调用
 
-####静态库
+#### 静态库
 
 Linux：libxxx.a — lib固定前缀，xxx为库名称，.a为后缀
 
@@ -134,7 +134,7 @@ sudo vim /etc/ld.so.conf
 sudo ldconfig
 ```
 
-####两种库的对比
+#### 两种库的对比
 
 | 库类型 | 优点                                                         | 缺点                                                       |
 | ------ | ------------------------------------------------------------ | ---------------------------------------------------------- |
@@ -218,7 +218,7 @@ clean:
 
 ```
 
-###1.4GDB调试
+### 1.4GDB调试
 
 Linux系统下的代码调试工具，和gcc一起构成完整的开发环境（程序启动、断点、检查、修改）
 
@@ -309,7 +309,7 @@ undisplay 编号 #取消自动变量
 
 ![image-20220321144512763](assets/image-20220321144512763.png)
 
-####[虚拟地址空间](https://blog.csdn.net/lqy971966/article/details/119378416)
+#### [虚拟地址空间](https://blog.csdn.net/lqy971966/article/details/119378416)
 
 **虚拟存储器**
 
@@ -343,7 +343,7 @@ int main(int argc, char* argv[]);
 
 
 
-####man命令
+#### man命令
 
 man:查看某个命令的具体参数和使用方法
 
@@ -359,7 +359,7 @@ man:查看某个命令的具体参数和使用方法
 |  8   |    System administration commands     | **系统管理员命令**（通常针对**root**用户） |
 |  9   |            Kernel routines            |              常规**内核**文件              |
 
-####Linux系统IO函数
+#### Linux系统IO函数
 
 ```C++
 int open(const char *pathname, int flags);
@@ -396,7 +396,7 @@ struct stat {
 
 ![image-20220419222326783](assets/image-20220419222326783.png)
 
-####文件属性操作函数
+#### 文件属性操作函数
 
 ```C++
 int access(const char *pathname, int mode);
@@ -405,7 +405,7 @@ int chown(const char *path, uid_t owner, gid_t group);
 int truncate(const char *path, off_t length);
 ```
 
-####目录操作函数
+#### 目录操作函数
 
 ```C++
 int rename(const char *oldpath, const char *newpath);
@@ -415,7 +415,7 @@ int mkdir(const char *pathname, mode_t mode);
 int rmdir(const char *pathname);
 ```
 
-####目录遍历函数
+#### 目录遍历函数
 
 ```C++
 DIR *opendir(const char *name);
@@ -464,7 +464,7 @@ int fcntl(int fd, int cmd, ... /* arg */ );
 
 ## 2.多进程开发
 
-###2.1进程状态
+### 2.1进程状态
 
 程序包含了一系列的信息，用这些信息描述如何创建进程
 
@@ -488,7 +488,7 @@ int fcntl(int fd, int cmd, ... /* arg */ );
 
 #### 2.1.1进程查看
 
-#####查看所有进程
+##### 查看所有进程
 
 ```shell
 ps aux / ajx
@@ -508,7 +508,7 @@ ps aux / ajx
 | **D** | **不可中断 Uninterruptible（usually IO）** |
 | **Z** | **僵尸进程**                               |
 
-#####查看实时进程
+##### 查看实时进程
 
 ```shell
 top (-d)
@@ -555,7 +555,7 @@ fork（）原理解释：相当于克隆一个虚拟地址空间，用户区数�
 
 ![image-20220523114226869](assets/image-20220523114226869.png)
 
-#####写时拷贝
+##### 写时拷贝
 
 调用fork函数创建子进程，采用的主要技术是“写时拷贝”（copy-on-write）：在创建子进程的时候并不会直接克隆，而是将子进程的页表项指向与父进程相同的物理页，这也只需要拷贝父进程的页表项就可以了，不会复制整个内存地址空间，同时把这些页表项标记为只读。如果父子进行都不对页面进行操作，那么便一直共享同一份物理页面。只要父子进程有一个尝试进行修改某一个页面，那么就会发生缺页异常（page fault）。那么内核便会为该页面创建一个新的物理页面，并将内容复制到新的物理页面中，让父子进程真正地各自拥有自己的物理内存页面，并将页表中相应地页表项标记为可写。
 
@@ -630,7 +630,7 @@ void _exit(int status);
 
 - 僵尸进程：子进程结束，父进程没有回收，子进程的残留资源成为僵尸进程，占用大量进程号——父进程wait()/waitpid()处理
 
-####2.1.4进程回收
+#### 2.1.4进程回收
 
 在每个进程退出的时候，内核释放该进程所有的资源、包括打开的文件、占用的内存等。但是仍然为其保留一定的信息，这些信息主要主要指进程控制块PCB的信息（包括进程号、退出状态、运行时间等）。  
 
@@ -701,7 +701,7 @@ long fpathconf(int fd, int name);
 
 ![pipe](assets/pipe.jpg)
 
-####2.2.2有名管道（fifo）
+#### 2.2.2有名管道（fifo）
 
 与匿名管道的区别在于：可以在无关进程间建立通信，有文件实体但不存储任何内容
 
@@ -754,7 +754,7 @@ FIFO 严格遵循先进先出（First in First out），对管道及 FIFO 的读
 
 ![image-20220607160051968](assets/image-20220607160051968.png)
 
-####2.2.4内存映射
+#### 2.2.4内存映射
 
 内存映射（Memory-mapped I/O）是将磁盘文件的数据映射到内存，用户通过修改内存就能修改磁盘文件。
 
@@ -849,9 +849,12 @@ int munmap(void *addr, size_t length);
 |  19  | SIGSTOP  |          停止进程的执行。信号不能被忽略，处理和阻塞          |         为终止进程         |
 |  20  | SIGTSTP  |   停止终端交互进程的运行。按下<ctrl+z>组合键时发出这个信号   |        **暂停进程**        |
 
-注意：SIGKILL 和 SIGSTOP 信号**不能**被捕捉、阻塞或者忽略，只能执行默认动作。  
+注意：
 
-####2.3.1信号相关函数
+- SIGKILL 和 SIGSTOP 信号**不能**被捕捉、阻塞或者忽略，只能执行默认动作。  
+- core文件的查看方式：gdb调试，然后输入指令`core-fire core`，进行查看。
+
+#### 2.3.1信号相关函数
 
 ```C
 int kill(pid_t pid, int sig);
@@ -863,7 +866,7 @@ sighandler_t signal(int signum, sighandler_t handler);
 int sigaction(int signum, const struct sigaction *act, struct sigaction *oldact);
 ```
 
-####2.3.2信号集函数
+#### 2.3.2信号集函数
 
 信号集：一种特殊的**数据结构**，数据类型为 sigset_t，用来表示一组不同的多个信号
 
@@ -900,13 +903,13 @@ int sigpending(sigset_t *set);//把未决信号集取出
 
 以上三种条件都会给父进程发送 SIGCHLD 信号，父进程默认会忽略该信号  
 
-###2.4共享内存
+### 2.4共享内存
 
 共享内存允许两个或者多个进程共享物理内存的同一块区域（通常被称为段）。由于一个共享内存段会称为一个进程用户空间的一部分，因此这种 IPC 机制无需内核介入。所有需要做的就是让一个进程将数据复制进共享内存中，并且这部分数据会对其他所有共享同一个段的进程可用。
 
 与管道等要求发送进程将数据从用户空间的缓冲区复制进内核内存和接收进程将数据从内核内存复制进用户空间的缓冲区的做法相比，这种 IPC 技术的速度更快。 
 
-####2.4.1共享内存操作
+#### 2.4.1共享内存操作
 
 - 调用 shmget() 创建一个新共享内存段  
 - 使用 shmat() 使进程附着共享内存段  
@@ -943,16 +946,247 @@ ipcrm用法
 
 ### 2.5守护进程
 
-####2.5.1终端、进程组、会话
+一个进程一般具有以下ID：
 
+- PID：进程的唯一标识。对于多线程的进程而言，所有线程调用getpid函数会返回相同的值。
+- PGID：进程组ID。每个进程都会有进程组ID，表示该进程所属的进程组。默认情况下新创建的进程会继承父进程的进程组ID。
+- SID：会话ID。每个进程也都有会话ID。默认情况下，新创建的进程会继承父进程的会话ID。
 
+#### 2.5.1终端、进程组、会话
 
-####2.5.2守护进程
+- 终端（termimal）：作用是提供一个命令的输入输出环境
 
+  shell：是一个命令行解释器，是linux内核的一个外壳,负责外界与linux内核的交互
 
+  通过终端登录系统后，自动生成一个shell进程，终端此时转化为shell进程的控制终端，信息保存在shell进程的PCB中，所以 通过shell进程fork出的进程都有一个共同的控制终端，在控制终端输入一些特殊的控制键可以给前台进程发信号，  例如 `Ctrl + C `会产生 SIGINT 信号， `Ctrl + \ `会产生 SIGQUIT 信号。  
 
-tty 命令  显示当前终端对应终端设备文件
+- 进程组：一组相关进程的集合
 
+  由一个或多个共享同一进程组标识符（PGID）的进程组成。一个进程组拥有一个进程组首进程，该进程是创建该组的进程，其进程 ID 为该进程组的 ID，新进程会继承其父进程所属的进程组 ID。  
+
+  进程组生命周期：首进程创建组到最后一个进程退出组（进程终止或者进程加入其他组），首进程不需要是最后退出的进程。
+
+- 会话：一组相关进程组的集合。
+
+  会话首进程是创建该新会话的进程，其进程 ID 会成为会话 ID。新进程会继承其父进程的会话 ID  
+
+  终端与会话关系：一个会话中的所有进程共享单个控制终端。在会话首进程首次打开一个终端设备时建立控制终端。一个终端最多可能会成为一个会话的控制终端  
+
+  在任一时刻，会话中的其中一个进程组会成为终端的前台进程组，其他进程组会成为后台进程组。只有前台进程组中的进程才能从控制终端中读取输入。当用户在控制终端中输入终端字符生成信号后，该信号会被发送到前台进程组中的所有成员。当控制终端的连接建立起来之后，**会话首进程**会成为该终端的控制进程 。
+
+  ```shell
+  find / 2 > /dev/null | wc -l &
+  sort < longlist | uniq -c  
+  ```
+
+<img src="assets/20220630212638.png"  />
+
+相关操作函数：
+
+```C++
+pid_t getpgrp(void);//获取当前进程组ID
+pid_t getpgid(pid_t pid);//获得进程组ID
+int setpgid(pid_t pid, pid_t pgid);//设置进程组ID
+pid_t getsid(pid_t pid);//获得会话ID
+pid_t setsid(void);//设置会话ID
+```
+
+#### 2.5.2守护进程
+
+守护进程（Daemon Process），也就是通常说的 Daemon 进程（精灵进程），是Linux 中的后台服务进程。它是一个生存期较长的进程，通常独立于控制终端并且周期性地执行某种任务或等待处理某些发生的事件。一般采用以 d 结尾的名字。有以下特征：
+
+- 生命周期很长，守护进程会在系统启动的时候被创建并一直运行直至系统被关闭 
+- 它在后台运行并且不拥有控制终端。没有控制终端确保了内核永远不会为守护进程自动生成任何控制信号以及终端相关的信号（如 SIGINT、 SIGQUIT） 
+
+Linux的大多数服务器就是用守护进程实现的。比如，Internet服务器inetd，Web服务器httpd等 。
+
+用户在执行命令时，可以在**命令的结尾**添加“&”符号，表示将命令放入**后台执行**。这样该命令对应的进程组即为后台进程组。
+
+##### 2.5.2.1创建步骤
+
+1. 执行一个 fork()，之后父进程退出，子进程继续执行  
+2. 子进程调用 setsid() 开启一个新会话  
+3. 清除进程的 umask 以确保当守护进程创建文件和目录时拥有所需的权限
+4. 修改进程的当前工作目录，通常会改为根目录（/）  
+5. 关闭守护进程从其父进程继承而来的所有打开着的文件描述符  
+6. 在关闭了文件描述符0、 1、 2之后，守护进程通常会打开/dev/null 并使用dup2()使所有这些描述符指向这个设备  
+7. 核心业务逻辑  
+
+```shell
+//Linuxs终端指令
+tty命令  显示当前终端对应终端设备文件
 who命令  查看当前系统上登录的所有账号c
-
 echo $$  返回登录shell的PID
+```
+
+## 3.多线程开发
+
+### 3.1线程操作
+
+线程（thread）是允许应用程序并发执行多个任务的一种机制。一个进程可以包含多个线程。同一个程序中的所有线程均会独立执行相同程序，且共享同一份全局内存区域，其中包括初始化数据段、未初始化数据段，以及堆内存段。（传统意义上的 UNIX 进程只是多线程程序的一个特例，该进程只包含一个线程）  
+
+- 进程是 CPU 分配资源的最小单位，线程是操作系统调度执行的最小单位 
+- 线程是轻量级的进程（LWP： Light Weight Process），Linux 环境下线程的本质仍是进程
+- 查看指定进程的LWP号：`ps –Lf pid`  
+
+|          |                             进程                             |                             线程                             |
+| :------- | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| 信息共享 | 信息难以共享（父子进程也只是共享代码段，需要进程间通信进行信息交换） |      能够方便、快速地共享信息（将数据复制到共享变量中）      |
+| 创建成本 | 调用 fork() 来创建进程的代价相对较高（复制内存页表和文件描述符） | 创建线程比创建进程通常要快 10 倍甚至更多（共享虚拟地址空间） |
+
+#### 3.1.1线程间资源
+
+- 共享资源
+  - 进程 ID 和父进程 ID
+  - 进程组 ID 和会话 ID
+  - 用户 ID 和 用户组 ID
+  - 文件描述符表
+  - 信号处置
+  - 文件系统的相关信息：文件权限掩码（umask）、当前工作目录
+  - 虚拟地址空间（除栈、 .text）  
+- 非共享资源
+  - 线程 ID
+  - 信号掩码
+  - 线程特有数据
+  - error 变量
+  - 实时调度策略和优先级
+  - 栈，本地变量和函数的调用链接信息  
+
+#### 3.1.2线程操作
+
+一个包括 IBM 的开发人员的团队开展了 NGPT（Next-Generation POSIX Threads）项目。同时， Red Hat 的一些开发人员开展了 NPTL 项目。 NGPT在 2003 年中期被放弃了，把这个领域完全留给了 NPTL。
+
+NPTL，或称为 Native POSIX Thread Library，是 Linux 线程的一个新实现，它克服了 LinuxThreads 的缺点，同时也符合 POSIX 的需求。与 LinuxThreads 相比，它在性能和稳定性方面都提供了重大的改进。
+
+查看当前 pthread 库版本： `getconf GNU_LIBPTHREAD_VERSION`
+
+编译线程文件时，由于线程操作函数库属于第三方库，因此需要加上`-l pthread` ，也可以直接写`-pthread` 进行编译。
+
+```c++
+int pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine) (void *), void *arg);
+pthread_t pthread_self(void);
+int pthread_equal(pthread_t t1, pthread_t t2);
+void pthread_exit(void *retval);
+int pthread_join(pthread_t thread, void **retval);//等待线程结束，retval存储被等待线程的返回值，阻塞
+int pthread_detach(pthread_t thread);
+int pthread_cancel(pthread_t thread);
+```
+
+- exit()用在线程内，代表当前线程退出
+- join()在主线程中，往往代表要等到子线程结束后结束（阻塞）
+- detach()代表分离线程（守护线程），线程分离到后台运行
+
+#### 3.1.3线程属性（pthread_attr_t）
+
+```C++
+int pthread_attr_init(pthread_attr_t *attr);
+int pthread_attr_destroy(pthread_attr_t *attr);
+int pthread_attr_getdetachstate(const pthread_attr_t* attr, int* detachstate);
+int pthread_attr_setdetachstate(pthread_attr_t* attr, int detachstate);
+```
+
+### 3.2线程同步
+
+线程的主要优势在于，能够通过全局变量来共享信息。不过，这种便捷的共享是有代价的：必须确保多个线程不会同时修改同一变量，或者某一线程不会读取正在由其他线程修改的变量。
+
+**临界区**是指访问某一共享资源的代码片段，并且这段代码的执行应为原子操作，也就是同时访问同一共享资源的其他线程不应终端该片段的执行。
+
+线程同步：即当有一个线程在对内存进行操作时，其他线程都不可以对这个内存地址进行操作，直到该线程完成操作，其他线程才能对该内存地址进行操作，而其他线程则处于等待状态。  
+
+#### 3.2.1互斥量
+
+为避免线程更新共享变量时出现问题，可以使用互斥量（mutex 是 mutual exclusion的缩写）来确保同时仅有一个线程可以访问某项共享资源。可以使用互斥量来保证对任意共享资源的原子访问。
+
+互斥量有两种状态：已锁定（locked）和未锁定（unlocked）。任何时候，至多只有一个线程可以锁定该互斥量。试图对已经锁定的某一互斥量再次加锁，将可能阻塞线程或者报错失败，具体取决于加锁时使用的方法。
+
+一旦线程锁定互斥量，随即成为该互斥量的所有者，只有所有者才能给互斥量解锁。一般情况下，对每一共享资源（可能由多个相关变量组成）会使用不同的互斥量，每一线程在访问同一资源时将采用如下协议：
+
+- 针对共享资源锁定互斥量
+- 访问共享资源
+- 对互斥量解锁  
+
+如果多个线程试图执行这一块代码（一个临界区），事实上只有一个线程能够持有该互斥量（其他线程将遭到阻塞），即同时只有一个线程能够进入这段代码区域  
+
+<img src="assets/image-20220702223213399.png" alt="image-20220702223213399" style="zoom: 80%;" />
+
+- 互斥量的类型：pthread_mutex_t 
+
+```c++
+int pthread_mutex_init(pthread_mutex_t *restrict mutex, const pthread_mutexattr_t *restrict attr);
+int pthread_mutex_destroy(pthread_mutex_t *mutex);
+int pthread_mutex_lock(pthread_mutex_t *mutex);
+int pthread_mutex_trylock(pthread_mutex_t *mutex);
+int pthread_mutex_unlock(pthread_mutex_t *mutex);
+```
+
+#### 3.2.2死锁
+
+一个线程需要同时访问两个或更多不同的共享资源，而每个资源又都由不同的互斥量管理。当超过一个线程加锁同一组互斥量时，就有可能发生死锁  
+
+两个或两个以上的进程在执行过程中，因争夺共享资源而造成的一种互相等待的现象，若无外力作用，它们都将无法推进下去。此时称系统处于死锁状态或系统产生了死锁。  
+
+死锁的几种场景：
+
+- 忘记释放锁
+- 重复加锁
+- 多线程多锁，抢占锁资源  
+
+
+
+![image-20220702223302270](assets/image-20220702223302270.png)
+
+#### 3.2.3读写锁
+
+当有一个线程已经持有互斥锁时，互斥锁将所有试图进入临界区的线程都阻塞住。但是考虑一种情形，当前持有互斥锁的线程只是要读访问共享资源，而同时有其它几个线程也想读取这个共享资源，但是由于互斥锁的排它性，所有其它线程都无法获取锁，也就无法读访问共享资源了，但是实际上多个线程同时读访问共享资源并不会导致问题。
+
+在对数据的读写操作中，更多的是读操作，写操作较少，例如对数据库数据的读写应用。为了满足当前能够允许多个读出，但只允许一个写入的需求，线程提供了读写锁来实现。
+
+ 读写锁的特点：
+
+- 如果有其它线程读数据，则允许其它线程执行读操作，但不允许写操作。
+- 如果有其它线程写数据，则其它线程都不允许读、写操作。
+- 写是独占的，写的优先级高  
+- 读写锁的类型：pthread_rwlock_t  
+
+```c++
+int pthread_rwlock_init(pthread_rwlock_t *restrict rwlock, const pthread_rwlockattr_t *restrict attr);
+int pthread_rwlock_destroy(pthread_rwlock_t *rwlock);
+int pthread_rwlock_rdlock(pthread_rwlock_t *rwlock);
+int pthread_rwlock_tryrdlock(pthread_rwlock_t *rwlock);
+int pthread_rwlock_wrlock(pthread_rwlock_t *rwlock);
+int pthread_rwlock_trywrlock(pthread_rwlock_t *rwlock);
+int pthread_rwlock_unlock(pthread_rwlock_t *rwlock);
+```
+
+### 3.3生产者消费者模型
+
+- 生产者：资源增加
+- 消费者：资源减少
+
+#### 3.3.1条件变量
+
+条件变量的类型：pthread_cond_t  
+
+```c++
+int pthread_cond_init(pthread_cond_t *restrict cond, const pthread_condattr_t *restrict attr);
+int pthread_cond_destroy(pthread_cond_t *cond);
+int pthread_cond_wait(pthread_cond_t *restrict cond, pthread_mutex_t *restrict mutex);
+int pthread_cond_timedwait(pthread_cond_t *restrict cond, pthread_mutex_t *restrict mutex, const struct timespec *restrict abstime);
+int pthread_cond_signal(pthread_cond_t *cond);
+int pthread_cond_broadcast(pthread_cond_t *cond);
+```
+
+#### 3.3.2信号量
+
+信号量的类型：sem_t（类似于int的一种typedef，多个进程间共享）
+
+```c++
+int sem_init(sem_t *sem, int pshared, unsigned int value);
+int sem_destroy(sem_t *sem);
+int sem_wait(sem_t *sem);
+int sem_trywait(sem_t *sem);
+int sem_timedwait(sem_t *sem, const struct timespec *abs_timeout);
+int sem_post(sem_t *sem);
+int sem_getvalue(sem_t *sem, int *sval);
+```
+
