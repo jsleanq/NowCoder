@@ -1190,3 +1190,86 @@ int sem_post(sem_t *sem);
 int sem_getvalue(sem_t *sem, int *sval);
 ```
 
+## 4.网络编程
+
+### 4.1网络模型及协议
+
+概念知识：[小林coding](https://xiaolincoding.com/network/1_base/tcp_ip_model.html#%E5%BA%94%E7%94%A8%E5%B1%82)
+
+ [网络基础.pdf](Col 4\网络基础.pdf) 
+
+### 4.2网络通信
+
+ [socket通信基础.pdf](Col 4\socket通信基础.pdf) 
+
+#### 4.2.1字节序通信
+
+- 高地址位放高数据位：小端
+- 低地址位放高数据位：大端
+- 写/读内存由低到高，print输出的内容由左到右，由高到低
+
+```C
+//h - host 主机，主机字节序
+//to - 转换成什么
+//n - network 网络字节序
+//s - short unsigned short
+//l - long unsigned int
+
+#include <arpa/inet.h>
+// 转换端口
+uint16_t htons(uint16_t hostshort); // 主机字节序 - 网络字节序
+uint16_t ntohs(uint16_t netshort); // 网络字节序 - 主机字节序
+// 转IP
+uint32_t htonl(uint32_t hostlong); // 主机字节序 - 网络字节序
+uint32_t ntohl(uint32_t netlong); // 网络字节序 - 主机字节序
+```
+
+#### 4.2.2socket通信
+
+##### 4.2.2.1socket地址
+
+**通用socket地址**
+
+结构体sockaddr （旧）：因为sa_data[14]不够IPv6
+
+```c++
+#include <bits/socket.h>
+struct sockaddr {
+sa_family_t sa_family;
+char sa_data[14];
+};
+typedef unsigned short int sa_family_t;
+```
+
+新：通用的 socket 地址结构体  
+
+```c++
+#include <bits/socket.h>
+struct sockaddr_storage
+{
+sa_family_t sa_family;
+unsigned long int __ss_align;
+char __ss_padding[ 128 - sizeof(__ss_align) ];
+};
+typedef unsigned short int sa_family_t;
+```
+
+#### 4.2.3TCP通信
+
+ [TCP三次握手四次挥手.pdf](Col 4\TCP三次握手四次挥手.pdf) 
+
+### 4.3I/O多路复用(epoll)
+
+ [IO多路复用.pdf](Col 4\IO多路复用.pdf) 
+
+ [IO多路复用图解.pdf](Col 4\IO多路复用图解.pdf) 
+
+### 4.4UDP通信、本地套接字
+
+ [UDP通信、本地套接字.pdf](Col 4\UDP通信、本地套接字.pdf) 
+
+## 5.项目实战
+
+ [项目实战.pdf](Col 5\项目实战.pdf) 
+
+ [写HTTP响应BUG解决.pdf](Col 5\写HTTP响应BUG解决.pdf) 
