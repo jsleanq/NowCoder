@@ -220,6 +220,8 @@ clean:
 
 ### 1.4GDB调试
 
+[csdn](https://blog.csdn.net/daaikuaichuan/article/details/89791255?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-0-89791255-blog-122844663.t5_layer_eslanding_SACD_04&spm=1001.2101.3001.4242.1&utm_relevant_index=3)
+
 Linux系统下的代码调试工具，和gcc一起构成完整的开发环境（程序启动、断点、检查、修改）
 
 ```shell
@@ -1089,7 +1091,7 @@ int pthread_attr_setdetachstate(pthread_attr_t* attr, int detachstate);
 
 线程的主要优势在于，能够通过全局变量来共享信息。不过，这种便捷的共享是有代价的：必须确保多个线程不会同时修改同一变量，或者某一线程不会读取正在由其他线程修改的变量。
 
-**临界区**是指访问某一共享资源的代码片段，并且这段代码的执行应为原子操作，也就是同时访问同一共享资源的其他线程不应终端该片段的执行。
+**临界区**是指访问某一共享资源的代码片段，并且这段代码的执行应为原子操作，也就是同时访问同一共享资源的其他线程不应中断该片段的执行。
 
 线程同步：即当有一个线程在对内存进行操作时，其他线程都不可以对这个内存地址进行操作，直到该线程完成操作，其他线程才能对该内存地址进行操作，而其他线程则处于等待状态。  
 
